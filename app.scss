@@ -5,6 +5,10 @@
     outline: none !important;
 }
 
+$primary: blueviolet;
+$secondary: #ebebeb;
+$secondary2: #d5d5d5;
+
 body {
     position: relative;
     display: block;
@@ -104,7 +108,7 @@ table {
         .mtitle {
             display: block;
             font-family: Arial, Helvetica, sans-serif;
-            color: blueviolet;
+            color: $primary;
             width: 100%;
         }
     }
@@ -117,7 +121,7 @@ table {
     
     .bg-info {
         display: inline;
-        color: blueviolet;
+        color: $primary;
         font-weight: bolder;
         font-size: 20px;
         background: yellow;
@@ -135,17 +139,131 @@ table {
     right: 0;
     width: 60px;
     height: 60px;
-    margin: 25px;
+    margin: 35px 25px;
     border: none;
     filter: drop-shadow(0 0 3px rgba(0,0,0,0.2));
     cursor: pointer;
-    background: blueviolet;
+    background: $primary;
     color: #fff;
     font-size: 24px;
 }
 
-@media screen and (max-width: 426px) {
+.modal {
+    position: absolute;
+    display: none;
+    opacity: 0;
+    visibility: none;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    z-index: 12;
+    transition: all 500ms ease-in-out;
+
+
     
+    &.show {
+        visibility: visible;
+        opacity: 1;
+        transition: all 500ms ease-in-out;
+        display: block;
+    }
+}
+.modal-dialog {
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.2));
+    overflow: hidden;
+    min-width: 310px;
+    padding: 0;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom: 1px solid $secondary2;
+    border-right: 1px solid $secondary2;
+    border-left: 1px solid $secondary2;
+
+    .modal-content {
+        display: blocks;
+        padding: 15px;
+    }
+
+    .titlebar {
+        position: relative;
+        display: grid;
+        grid-template-columns: 18px auto;
+        align-items: center;
+        width: 100%;
+        background: linear-gradient(to top, $secondary, $secondary2);
+        color: #4d494d;
+        text-align: center;
+        width: 100%;
+        padding: 3px 15px;
+        border-top: 1px solid $secondary;
+        border-bottom: 1px solid $secondary2;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        user-select: none;
+
+        .close {
+            background: #ff5c5c;
+            border: 1px solid #e33e41;
+            border-radius: 50%;
+            display: inline-block;
+            color: #fff;
+        }
+    }
+}
+
+.form {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    .input-group {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+        margin: 5px 0;
+
+        label {
+            display: block;
+            padding: 0;
+            margin: 0;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+            padding: 5px;
+            border: 1px inset rgba(0,0,0,0.1);
+            border-radius: 6px;
+            background: $secondary;
+        }
+
+        .form-button {
+            position: relative;
+            display: inline-block;
+            background: $primary;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+            border: none;
+            color: #fff;
+            padding: 5px 0;
+            border-radius: 6px;
+            text-align: center;
+        }
+    }
+}
+
+@media screen and (max-width: 426px) {
     #more {
         display: grid;
         grid-gap: 10px;
@@ -153,6 +271,9 @@ table {
         width: 100%;
         height: 100%;
     }
+}
+
+@media screen and (max-width: 1025px) {
     .wrapper {
         position: relative;
         display: block;

@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Calendar</title>
     <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
@@ -21,7 +22,39 @@
         <div class="content">
             <div id="more"></div>
         </div>
+        <div class="modal" role="dialog" id="modal">
+            <div class="modal-dialog">
+                <div class="titlebar">
+                    <button class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                    <div class="title">
+                        Add Plan
+                    </div>
+                </div>
+                <div class="modal-content">
+                    <form data-form="plan" id="form" class="form">
+                        <div class="input-group">
+                            <label for="start_date">Date</label>
+                            <input type="text" name="start_date" class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <label for="budget">Budget</label>
+                            <input type="text" name="budget" class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <label for="list">To-do List</label>
+                            <textarea class="form-control" name="list"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <input class="form-button" type="submit" value="Add Plan">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <script src="app.js"></script>
 

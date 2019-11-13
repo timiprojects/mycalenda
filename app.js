@@ -1,20 +1,63 @@
+'use strict'
 
-today = new Date();
+let today = new Date();
 const itemHolder = document.querySelector("#more");
-currentMonth = today.getMonth();
-currentYear = today.getFullYear();
-selectYear = document.getElementById("year");
-selectMonth = document.getElementById("month");
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+let selectYear = document.getElementById("year");
+let selectMonth = document.getElementById("month");
+const modal = document.querySelector("#modal");
+const formplan = document.querySelector("[data-form='plan']#form.form")
+
+let plans = [], id = 1
+
+formplan.addEventListener('submit', function (e) {
+    e.preventDefault();
+    //console.log(e.target.start_date)
+    const { start_date, end_date, budget, list } = e.target
+    if (!start_date.value && !end_date.value && !budget.value && !list.value) {
+        console.log('one or more field(s) are empty!!')
+    } else {
+        plans.unshift({
+            id: id++,
+            start_date: start_date.value,
+            end_date: end_date.value,
+            budget: budget.value,
+            list: list.value,
+        })
+    }
+
+    console.log(plans)
+})
+
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const addbtn = document.createElement('button');
-addbtn.innerText = "+"
-addbtn.classList.add('addBtn');
-document.querySelector(".wrapper").appendChild(addbtn)
+const showlist = document.createElement('button');
+showlist.innerHTML = `<i class="material-icons">list</i>`
+showlist.classList.add('addBtn');
+document.querySelector(".wrapper").appendChild(showlist)
+
+showlist.addEventListener('click', function () {
+
+    if (modal.classList.contains("show")) {
+        modal.classList.remove("show");
+    }
+    modal.classList.add("show");
+})
+
+document.querySelector("[data-dismiss='modal']").addEventListener('click', function () {
+    if (modal.classList.contains("show")) {
+        modal.classList.remove("show");
+    }
+})
 
 
 init(months, currentYear);
+
+
+
+
 
 
 // function next() {
@@ -66,10 +109,10 @@ function init(months, year) {
 function showCalendar(month, year) {
     let firstDay = (new Date(year, month)).getDay();
     let tbl = document.createElement("table");
-    
+
     let Thead = tbl.createTHead()
     let Tbody = tbl.createTBody()
-    
+
     Thead.insertAdjacentHTML('beforeend', `
         <tr><th class="mtitle">${months[month]} ${year}</th></tr>
         <tr>
@@ -87,18 +130,20 @@ function showCalendar(month, year) {
 
     // clearing all previous cells
     tbl.innerHTML = "";
-    
 
-    
+
+
     // selectYear.value = year;
     // selectMonth.value = month;
-    
+
 
     // creating all cells
-    let date = 1;
+    let date = 1, cell, cellText;
     for (let i = 0; i < 6; i++) {
         // creates a table row
         let row = document.createElement("tr");
+        row.setAttribute("id", "itemrows")
+        row.setAttribute("data-rows", "rows")
 
 
         //creating individual cells, filing them up with data.
@@ -120,22 +165,45 @@ function showCalendar(month, year) {
                 if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                     cell.classList.add("bg-info");
                 } // color today's date
+
+
+
                 cell.appendChild(cellText);
                 row.appendChild(cell);
                 Tbody.appendChild(row)
                 date++;
-            }
 
+
+            }
 
         }
         tbl.appendChild(Thead);
         tbl.appendChild(Tbody); // appending each row into calendar body.
-        
-        
 
     }
     itemHolder.appendChild(tbl)
+    const trows = Tbody.querySelectorAll("[data-rows='rows']")
+    trows.forEach((_row) => {
+        const tds = _row.querySelectorAll("td");
+        tds.forEach((td) => {
+            if (td.innerText == "") {
+                //td.remove();
+            } else {
+                td.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    if(modal.classList.contains("show")) {
+                        modal.classList.remove("show");
+                    }
+                    modal.classList.add("show");
+                    formplan.start_date.value = `${year}-${month+1}-${e.target.innerText}`;
+                    console.log(modal.querySelector("#form"))
+                })
+            }
+        })
+    })
 }
+
 
 
 // function showCalendar(month, year) {
